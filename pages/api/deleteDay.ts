@@ -31,7 +31,7 @@ const apiEndpoint = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sa
           Authorization : `Bearer ${process.env.SANITY_API_TOKEN}`
       },
       body: JSON.stringify(mutations),
-      method: 'post'
+      method: 'post '
   })
   const json = await result.json();
   res.status(200).json({ checkMessage: 'Succsess deleted' })
