@@ -18,13 +18,18 @@ function MoreMenu({selectedID,onClose,visible,setDayPlans}:Props) {
 
   const deleteDay = async () => {
 
+    const commentToast = toast.loading('Deleting day...')
     const deleteInformation: DeleteInfo = {
       id:selectedID,
       type:'dayPlan',
   }
 
-    console.log(JSON.stringify(deleteInformation));
-    const result  = await fetch(`/api/deleteDay`,{
+    const result  = await fetch(`/api/deleteAllGoals`,{
+      body: JSON.stringify(deleteInformation),
+      method:'DELETE'
+    })
+
+    const result2  = await fetch(`/api/deleteDay`,{
       body: JSON.stringify(deleteInformation),
       method:'DELETE'
     })
@@ -32,9 +37,10 @@ function MoreMenu({selectedID,onClose,visible,setDayPlans}:Props) {
     const json = await result.json();
     const newDays = await fetchDaysPlans()
     setDayPlans(newDays)
-    toast('Day was deleted',{icon:'✔️'})
-
     onClose();
+    toast.success('Day was deleted!' ,{
+      id: commentToast,
+  })
     return json;
 }
 

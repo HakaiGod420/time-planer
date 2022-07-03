@@ -51,9 +51,9 @@ function DataInputs({visible, onClose,setDayPlans} : Props) {
   return (
     <div onClick={handeOnClose} id="container" className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
         <div className="bg-white p-2 rounded min-w-[50%]">
-        <h1 className="text-xl text-center">Add info about new day</h1>
+        <h1 className="text-xl text-center mb-3">Add info about new day</h1>
             <form onSubmit={handleSubmit}>
-                <h2 className="font-bold text-center">Date</h2>
+                <h2 className="font-bold text-center">End date</h2>
                 <input value={dateInput} onChange={(e)=>setDateInput(e.target.value)} className="text-sm text-gray-base w-full 
                               mr-3 py-5 px-4 h-3 border 
                               border-gray-200 rounded mb-2"  placeholder='Input date' type="date" name="goal required" /> 

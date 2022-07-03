@@ -18,8 +18,8 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) 
 {
+  console.log('Request');
   const  {dayID} = req.query;
   const createdPlansList:CreatedPlan[] = await sanityClient.fetch(commentQuery,{dayID:dayID})
-
   res.status(200).json(createdPlansList)
 }

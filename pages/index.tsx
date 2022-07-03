@@ -11,6 +11,7 @@ interface Props {
 }
 
 const Home = ({daysPlan}: Props) => {
+  console.log(daysPlan)
   return (
     <div className=" bg-blue-100 h-screen">
       <Head>
