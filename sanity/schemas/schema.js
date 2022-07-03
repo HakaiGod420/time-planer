@@ -6,6 +6,7 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 
 // We import object and document schemas
 import dayPlan from './dayPlan' 
+import createdPlan from './createdPlan'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -14,6 +15,6 @@ export default createSchema({
   // Then proceed to concatenate our document type
   // to the ones provided by any plugins that are installed
   types: schemaTypes.concat([
-    dayPlan
+    dayPlan,createdPlan
   ]),
 })
