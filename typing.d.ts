@@ -26,7 +26,8 @@ export interface CreatedPlan extends CreatedPlanBody{
 export type CreatedPlanBody = {
     planName: string
     description: string
-    state: boolean
+    state: boolean  
+    dayPlanID: string
 }
 
 export type DeleteInfo = {

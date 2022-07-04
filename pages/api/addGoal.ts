@@ -1,24 +1,29 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { DayPlanBody } from '../../typing'
+import { CreatedPlanBody } from '../../typing'
 
 type Data = {
-  checkMessage: string
+    checkMessage: string
 }
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const data: DayPlanBody = JSON.parse(req.body)
+  const data: CreatedPlanBody = JSON.parse(req.body)
 
   const mutations = {
     mutations: [
       {
         create: {
-          _type: 'dayPlan',
-          goalDescription: data.goalDescription,
-          selectedDate: data.selectedDate,
+          _type: 'createdPlan',
+          planName: data.planName,
+          description: data.description,
+          state: data.state,
+          dayPlan:{
+            _type:'reference',
+            _ref:data.dayPlanID
+          }
         }
       }
     ]
@@ -33,5 +38,6 @@ export default async function handler(
     method: 'POST'
   })
   const json = await result.json();
-  res.status(200).json({ checkMessage: 'Succsess added' })
+  
+  res.status(200).json({ checkMessage: 'Succsess' })
 }

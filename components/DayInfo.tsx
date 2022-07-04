@@ -58,7 +58,7 @@ function DayInfo({dayPlan,setDaysPlan}: Props) {
 
       }
       {moreVisability && (
-      <MoreMenu setDayPlans={setDaysPlan} selectedID={dayPlan._id} onClose={handleOnClose} visible={moreVisability} />
+      <MoreMenu refreshGoals={() => refreshPlanDayList()} setDayPlans={setDaysPlan} selectedID={dayPlan._id} onClose={handleOnClose} visible={moreVisability} />
     )}
     </div>
   </div>
