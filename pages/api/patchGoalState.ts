@@ -16,7 +16,7 @@ export default async function handler(
         mutations: [
             {
                 patch: {
-                    id:selectedData.id,
+                        id:selectedData.id,
                     set:{
                         state:selectedData.state
                     },
