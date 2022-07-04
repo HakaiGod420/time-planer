@@ -25,7 +25,7 @@ const Home = ({daysPlan}: Props) => {
         </div>
           <DaysList dayPlan={daysPlan}/>
       </main>
-      <footer className="text-center">
+      <footer className="text-center text-black">
         <p>Made by <span className="font-bold">HakaiGod</span></p>
       </footer>
     </div>

@@ -34,3 +34,8 @@ export type DeleteInfo = {
     id: string,
     type: string
 }
+
+export type NewGoalState = {
+    id: string,
+    state: boolean
+}

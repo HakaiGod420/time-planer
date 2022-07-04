@@ -10,7 +10,7 @@ function AddButton({setDayPlans}:Props) {
   const [inputFieldsVisable, setInputFieldsVisability] = useState<boolean>(false)
   const handleOnClose = () =>setInputFieldsVisability(false)
   return (
-    <div>
+    <div className='text-black'>
       <div onClick={()=>setInputFieldsVisability(!inputFieldsVisable)} className="flex justify-center cursor-pointer">
         <IoAddCircleSharp className="h-10 w-10 mr-1" />
         <p className='text-xl mt-1'>Add new day</p>

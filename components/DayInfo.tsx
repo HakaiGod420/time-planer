@@ -26,8 +26,8 @@ function DayInfo({dayPlan,setDaysPlan}: Props) {
   return (
     <div className="rounded overflow-hidden shadow-lg bg-white">
       <div onClick={()=>setMoreVisability(!moreVisability)} className="float float-right p-2 cursor-pointer"><MdMoreHoriz/></div>
-    <div className="px-6 py-4 divide-y-2">
-      <div className="text-center font-bold text-xl mb-2">
+    <div className="px-6 py-4 divide-y-2 text-black">
+      <div className="text-center font-bold text-xl mb-2 ">
         <div>
         <p className="text-center font-bold">SELECTED DAY TO  COMPLETE GOALS</p>
         </div>
