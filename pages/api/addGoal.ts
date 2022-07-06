@@ -38,6 +38,5 @@ export default async function handler(
     method: 'POST'
   })
   const json = await result.json();
-  
   res.status(200).json({ checkMessage: 'Succsess' })
 }

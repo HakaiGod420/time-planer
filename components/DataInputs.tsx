@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 import toast from 'react-hot-toast';
 import { CreatedPlanBody, DayPlan, DayPlanBody } from '../typing';
 import { fetchDaysPlans } from '../utils/fetchDaysPlans';
@@ -34,22 +34,46 @@ function DataInputs({ visible, onClose, setDayPlans }: Props) {
             state: false,
             dayPlanID: uuidv4()
         }
-        if(inputList.length<=6){
+        if (inputList.length <= 6) {
             _inputList.push(tempData)
             setInputList(_inputList)
-        }else{
+        } else {
             alert("You cannot add more")
         }
     }
 
-    const removeMemberRow = (id:string) => {
-        let _inputList = inputList.filter(member=>member.dayPlanID!==id)
-        if(inputList.length>1){
+    const removeMemberRow = (id: string) => {
+        let _inputList = inputList.filter(member => member.dayPlanID !== id)
+        if (inputList.length > 1) {
             setInputList(_inputList)
         }
     }
 
+    const handleMemberChange = (
+        id: string,
+        event: ChangeEvent<HTMLInputElement>,
+    ) => {
+        const index = inputList.findIndex(m => m.dayPlanID === id)
+        let _inputList = [...inputList] as any
+        _inputList[index][event.target.name] = event.target.value
+
+        setInputList(_inputList)
+    }
+
+
+    const postGoal = async (goalInfo:CreatedPlanBody) => {
+  
+        const result = await fetch(`/api/addGoal`, {
+          body: JSON.stringify(goalInfo),
+          method: 'POST',
+        })
+    
+        const json = await result.json();
+        return json;
+      }
+
     const postDay = async () => {
+        const addDay = toast.loading('Creating day...')
         const dayPlanInfo: DayPlanBody = {
             goalDescription: goalInput,
             selectedDate: dateInput,
@@ -61,12 +85,25 @@ function DataInputs({ visible, onClose, setDayPlans }: Props) {
         })
 
         const json = await result.json();
+
+        for (var i = 0; i < inputList.length; i++) {
+
+            if (inputList[i].planName != '') {
+                inputList[i].dayPlanID = json.id
+                console.log(inputList[i])
+                await postGoal(inputList[i])
+            }
+        }
+
         const newDays = await fetchDaysPlans();
         setDayPlans(newDays)
 
-        toast('New Day is created', { icon: '✔️' })
+        toast.success('Day was added!', {
+            id: addDay,
+        })
 
         onClose();
+        console.log(json)
         return json;
 
     }
@@ -96,14 +133,12 @@ function DataInputs({ visible, onClose, setDayPlans }: Props) {
 
                     <h2 className="font-bold text-center">Goals List</h2>
                     {inputList.map(member => (
-                        <>
-                            <div className="flex items-stretch mt-2 justify-center p-1" key={member.dayPlanID}>
-                                <input className="text-sm text-gray-base w-[40%] mr-3 py-5 px-4 h-3 border border-gray-200 rounded mb-2" placeholder='Input Goal' type="text" />
-                                <input className="text-sm text-gray-base w-[40%] mr-3 py-5 px-4 h-3 border border-gray-200 rounded mb-2" placeholder='Input Goal Description' type="text" />
-                                <button onClick={() =>removeMemberRow(member.dayPlanID )} type='button' className=" disabled:bg-gray-100 bg-red-500 p-2 text-center rounded-full w-10 h-10 mr-2">-</button>
-                                <button onClick={addMemberRow} type='button' className=" disabled:bg-gray-100 bg-green-500 p-2 text-center rounded-full w-10 h-10 ">+</button>
-                            </div>
-                        </>
+                        <div className="flex items-stretch mt-2 justify-center p-1" key={member.dayPlanID}>
+                            <input className="text-sm text-gray-base w-[40%] mr-3 py-5 px-4 h-3 border border-gray-200 rounded mb-2" placeholder='Input Goal' type="text" name='planName' onChange={(e) => handleMemberChange(member.dayPlanID, e)} />
+                            <input className="text-sm text-gray-base w-[40%] mr-3 py-5 px-4 h-3 border border-gray-200 rounded mb-2" placeholder='Input Goal Description' name='description' onChange={(e) => handleMemberChange(member.dayPlanID, e)} type="text" />
+                            <button onClick={() => removeMemberRow(member.dayPlanID)} type='button' className=" disabled:bg-gray-100 bg-red-500 p-2 text-center rounded-full w-10 h-10 mr-2">-</button>
+                            <button onClick={addMemberRow} type='button' className=" disabled:bg-gray-100 bg-green-500 p-2 text-center rounded-full w-10 h-10 ">+</button>
+                        </div>
                     ))}
 
                     <div className="flex justify-center">

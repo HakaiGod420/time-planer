@@ -3,7 +3,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { DayPlanBody } from '../../typing'
 
 type Data = {
-  checkMessage: string
+  checkMessage: string,
+  id:string
 }
 
 export default async function handler(
@@ -23,15 +24,16 @@ export default async function handler(
       }
     ]
   }
-  const apiEndpoint = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/mutate/${process.env.NEXT_PUBLIC_SANITY_DATASET}`
+  const apiEndpoint = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/mutate/${process.env.NEXT_PUBLIC_SANITY_DATASET}?returnIds=true`
   const result = await fetch(apiEndpoint, {
     headers: {
       'content-type': 'application/json',
       Authorization: `Bearer ${process.env.SANITY_API_TOKEN}`
     },
     body: JSON.stringify(mutations),
-    method: 'POST'
+    method: 'POST',
   })
   const json = await result.json();
-  res.status(200).json({ checkMessage: 'Succsess added' })
+  console.log(json)
+  res.status(200).json({ checkMessage: 'Created day',id:json.results[0].id})
 }

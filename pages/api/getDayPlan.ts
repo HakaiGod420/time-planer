@@ -5,7 +5,7 @@ import {sanityClient} from '../../sanity'
 import {groq} from 'next-sanity'
 
 const feedQuery = groq `
-*[_type=="dayPlan"]
+*[_type=="dayPlan"] | order(_createdAt desc)
 `
 
 type Data = {
