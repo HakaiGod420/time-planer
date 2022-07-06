@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { CreatedPlan, DeleteInfo, NewGoalState } from '../typing'
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose,AiOutlineEdit } from "react-icons/ai";
 import toast from 'react-hot-toast';
 
 
@@ -57,6 +57,7 @@ function SinglePlan({ singleGoal, refreshGoals }: Props) {
       <div className='mt-2'>
         <span>{singleGoal.planName}</span>
         <span onClick={deleteOneGoal} className=" transition ease-in-out delay-150 float-right m-1 hover:bg-red-500"><AiOutlineClose /></span>
+        <span onClick={deleteOneGoal} className=" transition ease-in-out delay-150 float-right m-1 hover:bg-blue-500"><AiOutlineEdit /></span>
         <span className='float-right'>
         <input onClick={updateStateOfGoal} type="checkbox" className="toggle toggle-accent" checked={booleanCompletion} onChange={e=>{}}/>
         </span>
