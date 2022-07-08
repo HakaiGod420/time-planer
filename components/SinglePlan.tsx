@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { CreatedPlan, DeleteInfo, NewGoalState } from '../typing'
-import { AiOutlineClose,AiOutlineEdit } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineEdit } from "react-icons/ai";
 import toast from 'react-hot-toast';
+import GoalEdit from './GoalEdit';
 
 
 interface Props {
@@ -14,6 +15,8 @@ interface Props {
 
 function SinglePlan({ singleGoal, refreshGoals }: Props) {
   const [booleanCompletion, setBooleanCompletion] = useState<boolean>(singleGoal.state)
+  const [editVisability, setEditVisability] = useState<boolean>(false)
+  const handleOnClose = () => setEditVisability(false)
   const deleteOneGoal = async () => {
 
     const deleteGoal = toast.loading('Deleting goal...')
@@ -56,12 +59,19 @@ function SinglePlan({ singleGoal, refreshGoals }: Props) {
     <div>
       <div className='mt-2'>
         <span>{singleGoal.planName}</span>
-        <span onClick={deleteOneGoal} className=" transition ease-in-out delay-150 float-right m-1 hover:bg-red-500"><AiOutlineClose /></span>
-        <span onClick={deleteOneGoal} className=" transition ease-in-out delay-150 float-right m-1 hover:bg-blue-500"><AiOutlineEdit /></span>
+        <span onClick={deleteOneGoal} className=" transition ease-in-out delay-150 float-right m-1 hover:bg-red-500 hover:rounded-lg rounded-lg"><AiOutlineClose /></span>
+        <span onClick={()=>setEditVisability(!editVisability)} className=" transition ease-in-out delay-150 float-right m-1 hover:bg-blue-500 hover:rounded-lg rounded-lg"><AiOutlineEdit /></span>
         <span className='float-right'>
-        <input onClick={updateStateOfGoal} type="checkbox" className="toggle toggle-accent" checked={booleanCompletion} onChange={e=>{}}/>
+          <input onClick={updateStateOfGoal} type="checkbox" className="toggle toggle-accent" checked={booleanCompletion} onChange={e => { }} />
         </span>
       </div>
+
+      {editVisability && (
+        <div>
+          <GoalEdit singleGoal={singleGoal} onClose={handleOnClose} refreshGoals={refreshGoals}/>
+        </div>
+      )}
+
     </div>
   )
 }

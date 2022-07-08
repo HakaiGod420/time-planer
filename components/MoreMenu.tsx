@@ -56,7 +56,6 @@ function MoreMenu({ selectedID, onClose, visible, setDayPlans, refreshGoals }: P
       dayPlanID:selectedID
     }
 
-    console.log(JSON.stringify(goalInfo))
     const result = await fetch(`/api/addGoal`, {
       body: JSON.stringify(goalInfo),
       method: 'POST',
